@@ -58,7 +58,8 @@ def crossover(individuals):
         else:
              new_individual = random.choice(individuals[:])
 
-        new_individuals.append(mutate(new_individual))
+        #new_individuals.append(mutate(new_individual))
+        new_individuals.append(new_individual)
 
     return new_individuals
 
@@ -69,7 +70,9 @@ def crossover(individuals):
 
 
 def evolve(individuals, losses):
-    graded = [x[1] for x in sorted(graded, key=lambda x: x[0], reverse=True)]
+    sorted_y_idx_list = sorted(range(len(losses)),key=lambda x:losses[x])
+    individuals = [individuals[i] for i in sorted_y_idx_list ]
+
     #winners = individuals[:6]
 
     new_individuals = crossover(individuals)
