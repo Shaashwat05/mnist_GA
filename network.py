@@ -41,7 +41,7 @@ def train(models):
     losses = []
     for i in range(len(models)):
         history = models[i].fit(x=X_train,y=y_train, epochs=1, validation_data=(X_test, y_test))
-        losses.append(history.history['loss'][-1])
+        losses.append(round(history.history['loss'][-1], 4))
     return models, losses
 
 
@@ -53,4 +53,4 @@ def train(models):
 
 
 
-model.save("cnn.h5", model)
+#model.save("cnn.h5", model)
