@@ -4,7 +4,7 @@ import random
 
 no_of_generations = 10
 no_of_individuals = 10
-mutate_factor = 0.2
+mutate_factor = 0.05
 individuals = []
 
 layers = [0, 3, 5]
@@ -12,17 +12,18 @@ layers = [0, 3, 5]
 def mutate(new_individual):
 
     for i in layers:
-        for bias in new_individual.layers[i].get_weights()[1]:
-            for j in range(len(bias)):
-                if(random.uniform(0, 1) < mutate_factor):
-                    new_individual.layers[i].get_weights()[1][j] *= random.choice(-0.5, 0.5)
+        for bias in range(len(new_individual.layers[i].get_weights()[1])):
+            n = random.random()
+            if(n < mutate_factor):
+                new_individual.layers[i].get_weights()[1][bias] *= random.uniform(-0.5, 0.5)
 
     for i in layers:
         for weight in new_individual.layers[i].get_weights()[0]:
-            for j in range(len(weight)):
-                for k in range(len(weight[0])):
-                    if(random.uniform(0, 1) < mutate_factor):
-                        new_individual.layers[i].get_weights()[0][j][k] *= random.choice(-0.5, 0.5)
+            n = random.random()
+            if(n < mutate_factor):
+                for j in range(len(weight)):
+                    if(random.random() < mutate_factor):
+                        new_individual.layers[i].get_weights()[0][j] *= random.uniform(-0.5, 0.5)
 
 
     return new_individual
@@ -58,8 +59,8 @@ def crossover(individuals):
         else:
              new_individual = random.choice(individuals[:])
 
-        #new_individuals.append(mutate(new_individual))
-        new_individuals.append(new_individual)
+        new_individuals.append(mutate(new_individual))
+        #new_individuals.append(new_individual)
 
     return new_individuals
 
